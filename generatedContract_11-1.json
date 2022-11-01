@@ -1,0 +1,59 @@
+{
+  "provider": {
+    "name": "sample-provider"
+  },
+  "consumer": {
+    "name": "sample-consumer"
+  },
+  "interactions": [
+    {
+      "description": "a request to get a product",
+      "request": {
+        "method": "GET",
+        "path": "/product/10",
+        "query": "param=S",
+        "matchingRules": {
+          "$.query.param": {
+            "match": "regex",
+            "regex": "[A-Za-z0-9]{1,20}"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json; charset=UTF-8"
+        },
+        "body": {
+          "id": "5cc989d0-d800-434c-b4bb-b1268499e850",
+          "name": "product name",
+          "type": "product series"
+        },
+        "matchingRules": {
+          "$.body.name": {
+            "match": "type"
+          },
+          "$.body.type": {
+            "match": "type"
+          },
+          "$.body.id": {
+            "match": "type"
+          },
+          "$.headers.Content-Type": {
+            "match": "regex",
+            "regex": "application/json(;\\s?charset=[\\w\\-]+)?"
+          }
+        }
+      },
+      "providerState": "a product with ID 10 exists"
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "2.0.0"
+    },
+    "pact-jvm": {
+      "version": "4.2.9"
+    }
+  }
+}

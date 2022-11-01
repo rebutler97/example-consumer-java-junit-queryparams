@@ -32,19 +32,4 @@ public class ProductClient {
         }
       });
   }
-
-  public List<Product> getProducts() throws IOException {
-    return (List<Product>) Request.Get(this.url + "/products")
-      .addHeader("Accept", "application/json")
-      .execute().handleResponse(httpResponse -> {
-        try {
-          ObjectMapper mapper = new ObjectMapper();
-          List<Product> products = mapper.readValue(httpResponse.getEntity().getContent(), new TypeReference<List<Product>>(){});
-
-          return products;
-        } catch (JsonMappingException e) {
-          throw new IOException(e);
-        }
-      });
-  }
 }
